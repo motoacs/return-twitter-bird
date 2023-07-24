@@ -13,3 +13,5 @@ You can be installed in a user script execution environment such as Tampermonkey
 ```
 https://raw.githubusercontent.com/motoacs/return-twitter-bird/master/return-twitter-bird.user.js
 ```
+
+![](./image.png)
