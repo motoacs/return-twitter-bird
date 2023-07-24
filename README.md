@@ -11,5 +11,5 @@ Tampermonkey等のユーザースクリプト実行環境に、以下のURLを�
 You can be installed in a user script execution environment such as Tampermonkey by specifying the following URL
 
 ```
-https://github.com/motoacs/return-twitter-bird/raw/master/return-twitter-bird.user.js
+https://raw.githubusercontent.com/motoacs/return-twitter-bird/master/return-twitter-bird.user.js
 ```
