@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Return Twitter bird
 // @namespace    http://tampermonkey.net/
-// @version      0.1.1
+// @version      0.1.2
 // @description  Twitterの新しいロゴ "X" を従来の鳥に置き換えます  This is a user script that replaces Twitter's new logo "X" with a traditional bird
 // @author       github.com/motoacs
 // @match        https://twitter.com/*
@@ -47,5 +47,13 @@
   // body要素の子要素の変更を監視する  Monitor changes to child elements of the body element
   observer.observe(document.body, { childList: true, subtree: true });
   // 5秒後に動作を終了する  Terminate the event handler after 5 seconds
-  setTimeout(() => observer.disconnect(), 5000);
+  let timeoutId = setTimeout(() => observer.disconnect(), 5000);
+
+  // URLの変更を検知したら動作させる  Operate when URL changes are detected
+  window.addEventListener('popstate', () => {
+    clearTimeout(timeoutId);
+    // Restart observing
+    observer.observe(document.body, { childList: true, subtree: true });
+    timeoutId = setTimeout(() => observer.disconnect(), 5000);
+  });
 })();
