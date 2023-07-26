@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Return Twitter bird
 // @namespace    http://tampermonkey.net/
-// @version      0.1.3
+// @version      0.1.4
 // @description  Twitterの新しいロゴ "X" を従来の鳥に置き換えます  This is a user script that replaces Twitter's new logo "X" with a traditional bird
 // @author       github.com/motoacs
 // @match        https://twitter.com/*
@@ -23,7 +23,7 @@
       let paths = Array.from(svg.querySelectorAll('path'));
       paths.forEach(path => {
         // 指定されたpath要素と一致する場合、新しいpath要素で置き換える  If it matches the specified path element, replace it with the new path element
-        if (path.getAttribute('d')?.startsWith('M18.244')) {
+        if (path.getAttribute('d')?.startsWith('M14.258')) {
           console.log('Return Twitter Bird: found "X"');
           path.remove();
 
