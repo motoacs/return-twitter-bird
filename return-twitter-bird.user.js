@@ -23,7 +23,7 @@
       let paths = Array.from(svg.querySelectorAll('path'));
       paths.forEach(path => {
         // 指定されたpath要素と一致する場合、新しいpath要素で置き換える  If it matches the specified path element, replace it with the new path element
-        if (path.getAttribute('d')?.startsWith('M14.258')) {
+        if (path.getAttribute('d')?.startsWith('M18.244')) {
           console.log('Return Twitter Bird: found "X"');
           path.remove();
 
