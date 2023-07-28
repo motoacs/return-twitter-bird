@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Return Twitter bird
 // @namespace    http://tampermonkey.net/
-// @version      0.2.0
+// @version      0.3.0
 // @description  Twitterの新しいロゴ "X" を従来の鳥に置き換えます  This is a user script that replaces Twitter's new logo "X" with a traditional bird
 // @author       github.com/motoacs
 // @match        https://twitter.com/*
@@ -11,7 +11,7 @@
 
 (function () {
   'use strict';
-  console.log('User Script: Return Twitter Bird loaded!');
+  console.log('UserScript: Return Twitter Bird loaded!');
 
   // Your code here...
   function replaceSvgPaths() {
@@ -55,27 +55,47 @@
       document.head.appendChild(favicon);
     }
   }
-  
 
+  // タイトルをXからTwitterに置き換える  Replace "X" in the title with "Twitter"
+  function replaceTitle() {
+    let currentTitle = document.title;
+    let newTitle = currentTitle.replace(/\s\/\sX$/, ' / Twitter').replace(/^X$/, 'Twitter');
+    document.title = newTitle;
+  }
+  
   replaceFavicon();
+  replaceTitle();
   replaceSvgPaths();
   
   // MutationObserverの作成  Creating a MutationObserver
-  let observer = new MutationObserver(replaceSvgPaths);
+  let observer = new MutationObserver(() => {
+    replaceTitle();
+    replaceSvgPaths();
+  });
   // body要素の子要素の変更を監視する  Monitor changes to child elements of the body element
   observer.observe(document.body, { childList: true, subtree: true });
   // 5秒後に動作を終了する  Terminate the event handler after 5 seconds
   let timeoutId = setTimeout(() => observer.disconnect(), 5000);
 
-  // URLの変更を検知したら動作させる  Operate when URL changes are detected
-  window.addEventListener('popstate', () => {
-    clearTimeout(timeoutId);
+  document.addEventListener('click', (event) => {
+    console.log('Return Twitter Bird: click detected');
+    
+    setTimeout(() => {
+      clearTimeout(timeoutId);
+      replaceFavicon();
+      replaceTitle();
+      replaceSvgPaths();
+    }, 200);
+
+    setTimeout(() => {
+      replaceFavicon();
+      replaceTitle();
+      replaceSvgPaths();
+    }, 600);
+  
     // body子要素の変更監視を再開 Restart observing
     observer.observe(document.body, { childList: true, subtree: true });
     // 5秒後に動作を終了する  Terminate the event handler after 5 seconds
     timeoutId = setTimeout(() => observer.disconnect(), 5000);
-  });
-
-  // スマホ版でpopstateが効かないためタイマーで実行 Running with a timer because popstate does not work on the mobile browser
-  setInterval(replaceSvgPaths, 5000);
+  }, false);
 })();
